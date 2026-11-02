@@ -1,0 +1,34 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // User Profile Documents
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Sub-collection: Daily Execution Telemetry Logs
+      match /daily_logs/{dateStr} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

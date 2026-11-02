@@ -1,0 +1,6 @@
+{
+  "name": "TOONHUB - 3D Character Figurine Studio",
+  "description": "High-end 3D figurine showcase carousel featuring dynamic role-based transforms and tactile visual direction.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
